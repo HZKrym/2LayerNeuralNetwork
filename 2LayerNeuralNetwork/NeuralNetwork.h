@@ -6,6 +6,7 @@ public:
 	double getOutput();
 	void setInput(double x1, double x2);
 	void train();
+	void trainSum();
 	
 private:
 	const int SPEEDEDU = 10;

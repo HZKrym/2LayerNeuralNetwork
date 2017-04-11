@@ -5,6 +5,10 @@
 #include <iostream>
 
 
+double sigmoid(double x) {
+	return 1 / (1 + exp(-x));
+}
+
 
 NeuralNetwork::NeuralNetwork()
 {
@@ -24,12 +28,14 @@ void NeuralNetwork::summator() {
 		for (int j = 0; j < 2; j++) {
 			hidden[i] += inputs[j] * synapses1[j][i];
 		}
-		hidden[i] > 0.5 ? hidden[i] = 1.0 : hidden[i] = 0.0;
+		//hidden[i] > 0.5 ? hidden[i] = 1.0 : hidden[i] = 0.0;
+		hidden[i] = sigmoid(hidden[i]);
 	}
 	for (int i = 0; i < 2; i++) {
 		output += hidden[i] * synapses2[i];
 	}
-	output > 0.5 ? output = 1.0 : output = 0.0;
+	//output > 0.5 ? output = 1.0 : output = 0.0;
+	output = sigmoid(output);
 }
 
 void NeuralNetwork::train() {
@@ -53,6 +59,32 @@ void NeuralNetwork::train() {
 			for (int j = 0; j < 2; j++) {
 				synapses2[j] += 0.1 * localErr * hidden[j];
 			}
+		}
+	} while (gError != 0);
+}
+
+void NeuralNetwork::trainSum() {
+	double gError = 0;
+	double err[2];
+	do {
+		gError = 0;
+		int sum, n1, n2;
+		sum = rand() % 10 + 2;
+		n1 = rand() % sum + 1;
+		n2 = sum - n1;
+		setInput(sigmoid(n1), sigmoid(n2));
+		double localErr = sum - output;
+		gError += abs(localErr);
+		for (int j = 0; j < 2; j++) {
+			err[j] = localErr * synapses2[j];
+		}
+		for (int j = 0; j < 2; j++) {
+			for (int k = 0; k < 2; k++) {
+				synapses1[j][k] += 0.1 * err[j] * inputs[k];
+			}
+		}
+		for (int j = 0; j < 2; j++) {
+			synapses2[j] += 0.1 * localErr * hidden[j];
 		}
 	} while (gError != 0);
 }
