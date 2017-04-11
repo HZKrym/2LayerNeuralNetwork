@@ -14,9 +14,9 @@ private:
 	};
 	double synapses1[2][2];
 	double synapses2[2];
-	double neurons[2][2];
+	double inputs[2];
+	double hidden[2];
 	double output;
 	void summator();
-	void test(double gError);
 };
 

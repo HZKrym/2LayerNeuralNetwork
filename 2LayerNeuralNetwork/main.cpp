@@ -9,6 +9,7 @@ using namespace std;
 int main() {
 	double n1, n2;
 	NeuralNetwork objXOR;
+	cout << "I'm training a neural network! :D" << endl;
 	objXOR.train();
 	cout << "Ready!" << endl;
 	for (int i = 0; i < 4; i++) {
