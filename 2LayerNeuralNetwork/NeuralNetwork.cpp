@@ -35,7 +35,7 @@ void NeuralNetwork::summator() {
 		output += hidden[i] * synapses2[i];
 	}
 	//output > 0.5 ? output = 1.0 : output = 0.0;
-	output = sigmoid(output);
+	output;// = sigmoid(output);
 }
 
 void NeuralNetwork::train() {
@@ -72,8 +72,8 @@ void NeuralNetwork::trainSum() {
 		sum = rand() % 10 + 2;
 		n1 = rand() % sum + 1;
 		n2 = sum - n1;
-		setInput(sigmoid(n1), sigmoid(n2));
-		double localErr = sum - output;
+		setInput(n1, n2);
+		double localErr = sigmoid(sum) - sigmoid(output);
 		gError += abs(localErr);
 		for (int j = 0; j < 2; j++) {
 			err[j] = localErr * synapses2[j];
@@ -90,8 +90,8 @@ void NeuralNetwork::trainSum() {
 }
 
 void NeuralNetwork::setInput(double x1, double x2) {
-	inputs[0] = x1;
-	inputs[1] = x2;
+	inputs[0] = sigmoid(x1);
+	inputs[1] = sigmoid(x2);
 	summator();
 }
 
